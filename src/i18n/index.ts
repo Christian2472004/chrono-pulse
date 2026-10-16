@@ -29,6 +29,10 @@ type TranslationKeys = {
   'start.button.audioOn': string;
   'start.proTip': string;
   'start.tipMobile': string;
+  'start.difficulty': string;
+  'difficulty.easy': string;
+  'difficulty.normal': string;
+  'difficulty.brutal': string;
 
   // HUD
   'hud.shield': string;
@@ -147,6 +151,10 @@ export const fr: TranslationKeys = {
   'start.button.audioOn': 'SON ACTIVÉ',
   'start.proTip': 'ASTUCE: Appuyez sur <kbd>ESPACE</kbd> ou <kbd>ENTRÉE</kbd> pour entrer directement au combat !',
   'start.tipMobile': 'MOBILE : touchez l\'arène pour viser et trancher !',
+  'start.difficulty': 'DIFFICULTÉ',
+  'difficulty.easy': 'FACILE',
+  'difficulty.normal': 'NORMAL',
+  'difficulty.brutal': 'BRUTAL',
 
   'hud.shield': 'BOUCLIER',
   'hud.chronoMatrix': 'MATRICE CHRONO',
@@ -257,6 +265,10 @@ export const en: TranslationKeys = {
   'start.button.audioOn': 'AUDIO ON',
   'start.proTip': 'PRO-TIP: Press <kbd>SPACE</kbd> or <kbd>ENTER</kbd> to jump straight into combat!',
   'start.tipMobile': 'MOBILE: tap the arena to aim & slash!',
+  'start.difficulty': 'DIFFICULTY',
+  'difficulty.easy': 'EASY',
+  'difficulty.normal': 'NORMAL',
+  'difficulty.brutal': 'BRUTAL',
 
   'hud.shield': 'SHIELD',
   'hud.chronoMatrix': 'CHRONO MATRIX',
@@ -367,6 +379,10 @@ export const es: TranslationKeys = {
   'start.button.audioOn': 'SONIDO ACTIVO',
   'start.proTip': 'CONSEJO: Pulsa <kbd>ESPACIO</kbd> o <kbd>ENTRADA</kbd> para saltar directo al combate!',
   'start.tipMobile': 'MÓVIL: ¡toca la arena para apuntar y cortar!',
+  'start.difficulty': 'DIFICULTAD',
+  'difficulty.easy': 'FÁCIL',
+  'difficulty.normal': 'NORMAL',
+  'difficulty.brutal': 'BRUTAL',
 
   'hud.shield': 'ESCUDO',
   'hud.chronoMatrix': 'MATRIZ CHRONO',
@@ -477,6 +493,10 @@ export const ja: TranslationKeys = {
   'start.button.audioOn': '音声オン',
   'start.proTip': 'ヒント: <kbd>スペース</kbd> または <kbd>エンター</kbd> で即戦闘開始!',
   'start.tipMobile': 'モバイル: アリーナをタップで照準＆斬撃!',
+  'start.difficulty': '難易度',
+  'difficulty.easy': 'イージー',
+  'difficulty.normal': 'ノーマル',
+  'difficulty.brutal': 'ブルータル',
 
   'hud.shield': 'シールド',
   'hud.chronoMatrix': 'クロノマトリックス',

@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
 import { GameEngine } from './game/GameEngine';
 import { HighScoreRecord, GameState } from './game/types';
+import { DifficultyMode, loadDifficultyMode, saveDifficultyMode } from './game/difficulty';
 import { audio } from './game/audio';
 import { StartScreen } from './components/StartScreen';
 import { HUD } from './components/HUD';
@@ -57,6 +58,16 @@ export function App() {
     try {
       localStorage.setItem(LANGUAGE_KEY, lang);
     } catch { }
+  }, []);
+
+  // Difficulty state (chosen on the start screen, remembered between runs)
+  const [difficulty, setDifficulty] = useState<DifficultyMode>(() => loadDifficultyMode());
+
+  const handleDifficultyChange = useCallback((mode: DifficultyMode) => {
+    setDifficulty(mode);
+    saveDifficultyMode(mode);
+    // Apply immediately: the next start() will use these bounds
+    if (engineRef.current) engineRef.current.setDifficultyMode(mode);
   }, []);
 
   // Keep the document lang attribute in sync (screen readers, hyphenation, fonts)
@@ -121,6 +132,7 @@ export function App() {
       handleGameOver
     );
     engineRef.current = engine;
+    engine.setDifficultyMode(loadDifficultyMode());
 
     // If "start" was tapped before the engine existed, honor it now
     if (pendingStartRef.current) {
@@ -376,6 +388,8 @@ export function App() {
           topScore={highScores[0]?.score}
           language={language}
           onLanguageChange={handleLanguageChange}
+          difficulty={difficulty}
+          onDifficultyChange={handleDifficultyChange}
         />
       )}
 

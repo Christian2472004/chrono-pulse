@@ -3,6 +3,31 @@ import { Play, Trophy, HelpCircle, Volume2, VolumeX, Sparkles, Shield, Zap } fro
 import { LanguageSelector } from './LanguageSelector';
 import { GameLogo } from './GameLogo';
 import { t, Language } from '../i18n';
+import { DIFFICULTY_MODES, DifficultyMode } from '../game/difficulty';
+
+const DIFFICULTY_KEY_MAP: Record<DifficultyMode, 'difficulty.easy' | 'difficulty.normal' | 'difficulty.brutal'> = {
+  FACILE: 'difficulty.easy',
+  NORMAL: 'difficulty.normal',
+  BRUTAL: 'difficulty.brutal',
+};
+
+const difficultyButtonClass = (mode: DifficultyMode, active: boolean): string => {
+  const base = 'px-2.5 py-1 rounded-lg border text-[11px] font-chakra font-bold tracking-wider transition active:scale-95';
+  if (active) {
+    const activeStyles: Record<DifficultyMode, string> = {
+      FACILE: 'bg-emerald-500/20 border-emerald-400 text-emerald-300',
+      NORMAL: 'bg-cyan-500/20 border-cyan-400 text-cyan-300',
+      BRUTAL: 'bg-rose-500/20 border-rose-400 text-rose-300',
+    };
+    return `${base} ${activeStyles[mode]}`;
+  }
+  const hoverStyles: Record<DifficultyMode, string> = {
+    FACILE: 'hover:text-emerald-300 hover:border-emerald-500/60',
+    NORMAL: 'hover:text-cyan-300 hover:border-cyan-500/60',
+    BRUTAL: 'hover:text-rose-300 hover:border-rose-500/60',
+  };
+  return `${base} border-slate-700/80 text-slate-400 ${hoverStyles[mode]}`;
+};
 
 interface StartScreenProps {
   onStart: () => void;
@@ -13,6 +38,8 @@ interface StartScreenProps {
   topScore?: number;
   language: Language;
   onLanguageChange: (lang: Language) => void;
+  difficulty: DifficultyMode;
+  onDifficultyChange: (mode: DifficultyMode) => void;
 }
 
 export const StartScreen: React.FC<StartScreenProps> = ({
@@ -24,6 +51,8 @@ export const StartScreen: React.FC<StartScreenProps> = ({
   topScore = 0,
   language,
   onLanguageChange,
+  difficulty,
+  onDifficultyChange,
 }) => {
   return (
     <div className="absolute inset-0 z-30 flex overflow-y-auto select-none bg-slate-950/70 backdrop-blur-sm">
@@ -89,6 +118,33 @@ export const StartScreen: React.FC<StartScreenProps> = ({
             onLanguageChange={onLanguageChange}
             showLabel={false}
           />
+        </div>
+
+        {/* Difficulty Selector */}
+        <div
+          className="w-full flex items-center justify-center gap-2 flex-wrap"
+          role="group"
+          aria-label={t(language, 'start.difficulty')}
+        >
+          <span className="text-[10px] font-chakra font-bold uppercase tracking-widest text-slate-400">
+            {t(language, 'start.difficulty')}
+          </span>
+          <div className="flex gap-1.5">
+            {DIFFICULTY_MODES.map((mode) => {
+              const active = difficulty === mode;
+              return (
+                <button
+                  key={mode}
+                  type="button"
+                  onClick={() => onDifficultyChange(mode)}
+                  aria-pressed={active}
+                  className={difficultyButtonClass(mode, active)}
+                >
+                  {t(language, DIFFICULTY_KEY_MAP[mode])}
+                </button>
+              );
+            })}
+          </div>
         </div>
 
         {/* Action Buttons */}

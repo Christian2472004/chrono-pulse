@@ -29,7 +29,8 @@ Jeu d'action-arcade en navigateur au style synthwave : manipulez le temps, tranc
 - **Combat de précision** — Slash à 120°, parade des projectiles (renvoyés à 2× dégâts)
 - **Chrono Surge** — Ralentit le monde à 0.22×, énergie chrono à gérer
 - **Dash cyber** — Esquive avec frames d'invincibilité
-- **Difficulté adaptative** — Le directeur de difficulté analyse vos performances (PV perdus, précision, réflexes) et ajuste le jeu en 0.5×–2.5×
+- **3 modes de difficulté** — FACILE / NORMAL / BRUTAL, choisis au menu et mémorisés, bornent le directeur adaptatif
+- **Difficulté adaptative** — Le directeur de difficulté analyse vos performances (PV perdus, précision, réflexes) et ajuste le jeu dans les limites du mode choisi
 - **Système de combo & rangs** — Multiplicateur de score, critiques tous les 5 combos, 6 rangs (D → S+)
 - **5 types d'ennemis** — Drone, Sniper, Splitter, Orb Weaver, Titan
 - **Bonus de vie** — 8% de chance de drop un cœur à chaque kill (max 5 PV)

@@ -4,6 +4,7 @@ import {
   Player, Enemy, Projectile, Particle, FloatingText, ChronoPickup, 
   SlashWave, EnemyType, HighScoreRecord 
 } from './types';
+import { DIFFICULTY_TUNING, DifficultyMode } from './difficulty';
 
 export class GameEngine {
   private canvas: HTMLCanvasElement;
@@ -61,6 +62,8 @@ export class GameEngine {
 
   // --- DYNAMIC DIFFICULTY DIRECTOR ---
   private difficultyLevel: number = 1.0; // 0.5 (easy) to 2.5 (brutal)
+  // Difficulty mode picked in the menu — initialises and bounds the director
+  public difficultyMode: DifficultyMode = 'NORMAL';
   private perfWindow: number = 30; // seconds of recent performance
   private perfSamples: Array<{ time: number; hpLost: number; kills: number; slashes: number; hits: number; dashReactions: number }> = [];
   private lastHp: number = 5;
@@ -120,7 +123,12 @@ export class GameEngine {
     }
   }
 
+  public setDifficultyMode(mode: DifficultyMode) {
+    this.difficultyMode = mode;
+  }
+
   public reset() {
+    const tuning = DIFFICULTY_TUNING[this.difficultyMode];
     this.score = 0;
     this.combo = 0;
     this.comboTimer = 0;
@@ -151,8 +159,8 @@ export class GameEngine {
       speed: 340,
       chronoEnergy: 100,
       maxEnergy: 100,
-      health: 5,
-      maxHealth: 5,
+      health: tuning.maxHealth,
+      maxHealth: tuning.maxHealth,
       dashCooldown: 0,
       dashTimer: 0,
       isDashing: false,
@@ -166,11 +174,10 @@ export class GameEngine {
     this.spawnTimer = 0;
     this.nextSpawnInterval = 1.8;
 
-    // Difficulty Director init — start slightly below "normal" so the
-    // adaptive system protects casual players from the very first seconds
-    this.difficultyLevel = 0.85;
+    // Difficulty Director init — starting level comes from the chosen mode
+    this.difficultyLevel = tuning.start;
     this.perfSamples = [];
-    this.lastHp = 5; // Match player.maxHealth (now 5)
+    this.lastHp = tuning.maxHealth; // Match player.maxHealth
     this.slashCount = 0;
     this.hitCount = 0;
     this.killsThisWindow = 0;
@@ -246,15 +253,17 @@ export class GameEngine {
     if (avgKills > 12) adjustment += 0.05;
     else if (avgKills < 3) adjustment -= 0.05;
 
-    // Apply with smoothing - clamp adjustment per evaluation
+    // Apply with smoothing - clamp adjustment per evaluation, then keep the
+    // level inside the bounds of the chosen difficulty mode
     adjustment = Math.max(-0.25, Math.min(0.25, adjustment));
-    this.difficultyLevel = Math.max(0.5, Math.min(2.5, this.difficultyLevel + adjustment * 0.5));
+    const tuning = DIFFICULTY_TUNING[this.difficultyMode];
+    this.difficultyLevel = Math.max(tuning.min, Math.min(tuning.max, this.difficultyLevel + adjustment * 0.5));
   }
 
   private getDifficultyMultiplier(stat: 'spawn' | 'speed' | 'health' | 'projectile' | 'energyRegen' | 'chronoCost'): number {
     const dl = this.difficultyLevel;
     switch (stat) {
-      case 'spawn': return 2.0 - dl; // 1.5x at 0.5, 0.5x at 2.5 (faster spawns = harder)
+      case 'spawn': return Math.max(0.3, 2.0 - dl); // 1.5x at 0.5 → 0.3x floor (faster spawns = harder)
       case 'speed': return 0.7 + dl * 0.4; // 0.9x to 1.7x
       case 'health': return 0.8 + dl * 0.35; // 0.975x to 1.675x
       case 'projectile': return 0.85 + dl * 0.3; // 1.0x to 1.6x
