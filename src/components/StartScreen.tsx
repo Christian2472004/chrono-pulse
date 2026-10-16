@@ -33,9 +33,9 @@ export const StartScreen: React.FC<StartScreenProps> = ({
         <div className="absolute bottom-1/4 right-1/4 w-72 h-72 bg-rose-600/15 rounded-full blur-3xl pointer-events-none" />
       </div>
 
-      <div className="relative m-auto max-w-md w-full flex flex-col items-center text-center space-y-4 sm:space-y-5 p-4">
+      <div className="relative m-auto max-w-md w-full flex flex-col items-center text-center space-y-3 sm:space-y-4 p-4">
         {/* Animated Neon Logo */}
-        <GameLogo className="w-16 h-16 sm:w-20 sm:h-20 drop-shadow-[0_0_22px_rgba(34,211,238,0.3)]" />
+        <GameLogo className="w-14 h-14 sm:w-16 sm:h-16 drop-shadow-[0_0_22px_rgba(34,211,238,0.3)]" />
 
         {/* Game Badge */}
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-950/80 border border-cyan-500/40 text-cyan-300 text-xs font-chakra tracking-widest font-bold">
@@ -45,7 +45,7 @@ export const StartScreen: React.FC<StartScreenProps> = ({
 
         {/* Hero Title */}
         <div>
-          <h1 className="text-4xl sm:text-6xl font-orbitron font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-br from-white via-cyan-200 to-rose-400 drop-shadow-[0_5px_15px_rgba(6,182,212,0.4)]">
+          <h1 className="text-4xl sm:text-5xl font-orbitron font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-br from-white via-cyan-200 to-rose-400 drop-shadow-[0_5px_15px_rgba(6,182,212,0.4)]">
             CHRONO<span className="text-cyan-400"> // </span>PULSE
           </h1>
           <p className="font-chakra text-slate-300 text-sm sm:text-base mt-2 tracking-wide font-medium">
