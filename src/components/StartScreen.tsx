@@ -5,10 +5,11 @@ import { GameLogo } from './GameLogo';
 import { t, Language } from '../i18n';
 import { DIFFICULTY_MODES, DifficultyMode } from '../game/difficulty';
 
-const DIFFICULTY_KEY_MAP: Record<DifficultyMode, 'difficulty.easy' | 'difficulty.normal' | 'difficulty.brutal'> = {
+const DIFFICULTY_KEY_MAP: Record<DifficultyMode, 'difficulty.easy' | 'difficulty.normal' | 'difficulty.brutal' | 'difficulty.extreme'> = {
   FACILE: 'difficulty.easy',
   NORMAL: 'difficulty.normal',
   BRUTAL: 'difficulty.brutal',
+  EXTREME: 'difficulty.extreme',
 };
 
 const difficultyButtonClass = (mode: DifficultyMode, active: boolean): string => {
@@ -18,6 +19,7 @@ const difficultyButtonClass = (mode: DifficultyMode, active: boolean): string =>
       FACILE: 'bg-emerald-500/20 border-emerald-400 text-emerald-300',
       NORMAL: 'bg-cyan-500/20 border-cyan-400 text-cyan-300',
       BRUTAL: 'bg-rose-500/20 border-rose-400 text-rose-300',
+      EXTREME: 'bg-violet-500/20 border-violet-400 text-violet-300',
     };
     return `${base} ${activeStyles[mode]}`;
   }
@@ -25,6 +27,7 @@ const difficultyButtonClass = (mode: DifficultyMode, active: boolean): string =>
     FACILE: 'hover:text-emerald-300 hover:border-emerald-500/60',
     NORMAL: 'hover:text-cyan-300 hover:border-cyan-500/60',
     BRUTAL: 'hover:text-rose-300 hover:border-rose-500/60',
+    EXTREME: 'hover:text-violet-300 hover:border-violet-500/60',
   };
   return `${base} border-slate-700/80 text-slate-400 ${hoverStyles[mode]}`;
 };

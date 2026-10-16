@@ -1,6 +1,6 @@
 import React from 'react';
 import { GameEngine } from '../game/GameEngine';
-import { Volume2, VolumeX, Pause, Play, Shield, Zap, Sparkles, TrendingUp, TrendingDown, Minus } from 'lucide-react';
+import { Volume2, VolumeX, Pause, Play, Shield, Zap, Sparkles, TrendingUp, TrendingDown, Minus, Flame } from 'lucide-react';
 import { t, Language } from '../i18n';
 
 interface HUDProps {
@@ -26,16 +26,19 @@ export const HUD: React.FC<HUDProps> = ({
   const difficulty = engine.getDifficultyLevel();
   const getDifficultyIcon = () => {
     if (difficulty < 0.85) return <TrendingDown className="w-3 h-3 text-emerald-400" />;
+    if (difficulty > 1.7) return <Flame className="w-3 h-3 text-violet-400" />;
     if (difficulty > 1.25) return <TrendingUp className="w-3 h-3 text-rose-400" />;
     return <Minus className="w-3 h-3 text-amber-400" />;
   };
   const getDifficultyLabel = () => {
     if (difficulty < 0.85) return t(language, 'hud.difficulty.easy') + ' ▼';
+    if (difficulty > 1.7) return t(language, 'hud.difficulty.extreme') + ' ▲';
     if (difficulty > 1.25) return t(language, 'hud.difficulty.hard') + ' ▲';
     return t(language, 'hud.difficulty.normal') + ' ●';
   };
   const getDifficultyColor = () => {
     if (difficulty < 0.85) return 'text-emerald-400';
+    if (difficulty > 1.7) return 'text-violet-400';
     if (difficulty > 1.25) return 'text-rose-400';
     return 'text-amber-400';
   };

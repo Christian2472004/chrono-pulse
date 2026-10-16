@@ -33,6 +33,7 @@ type TranslationKeys = {
   'difficulty.easy': string;
   'difficulty.normal': string;
   'difficulty.brutal': string;
+  'difficulty.extreme': string;
 
   // HUD
   'hud.shield': string;
@@ -46,6 +47,7 @@ type TranslationKeys = {
   'hud.difficulty.easy': string;
   'hud.difficulty.normal': string;
   'hud.difficulty.hard': string;
+  'hud.difficulty.extreme': string;
   'hud.aria.mute': string;
   'hud.aria.unmute': string;
   'hud.aria.pause': string;
@@ -155,6 +157,7 @@ export const fr: TranslationKeys = {
   'difficulty.easy': 'FACILE',
   'difficulty.normal': 'NORMAL',
   'difficulty.brutal': 'BRUTAL',
+  'difficulty.extreme': 'EXTRÊME',
 
   'hud.shield': 'BOUCLIER',
   'hud.chronoMatrix': 'MATRICE CHRONO',
@@ -167,6 +170,7 @@ export const fr: TranslationKeys = {
   'hud.difficulty.easy': 'FACILE',
   'hud.difficulty.normal': 'NORMAL',
   'hud.difficulty.hard': 'DIFFICILE',
+  'hud.difficulty.extreme': 'EXTRÊME',
   'hud.aria.mute': 'Couper le son',
   'hud.aria.unmute': 'Activer le son',
   'hud.aria.pause': 'Mettre en pause',
@@ -269,6 +273,7 @@ export const en: TranslationKeys = {
   'difficulty.easy': 'EASY',
   'difficulty.normal': 'NORMAL',
   'difficulty.brutal': 'BRUTAL',
+  'difficulty.extreme': 'EXTREME',
 
   'hud.shield': 'SHIELD',
   'hud.chronoMatrix': 'CHRONO MATRIX',
@@ -281,6 +286,7 @@ export const en: TranslationKeys = {
   'hud.difficulty.easy': 'EASY',
   'hud.difficulty.normal': 'NORMAL',
   'hud.difficulty.hard': 'HARD',
+  'hud.difficulty.extreme': 'EXTREME',
   'hud.aria.mute': 'Mute audio',
   'hud.aria.unmute': 'Unmute audio',
   'hud.aria.pause': 'Pause game',
@@ -383,6 +389,7 @@ export const es: TranslationKeys = {
   'difficulty.easy': 'FÁCIL',
   'difficulty.normal': 'NORMAL',
   'difficulty.brutal': 'BRUTAL',
+  'difficulty.extreme': 'EXTREMA',
 
   'hud.shield': 'ESCUDO',
   'hud.chronoMatrix': 'MATRIZ CHRONO',
@@ -395,6 +402,7 @@ export const es: TranslationKeys = {
   'hud.difficulty.easy': 'FÁCIL',
   'hud.difficulty.normal': 'NORMAL',
   'hud.difficulty.hard': 'DIFÍCIL',
+  'hud.difficulty.extreme': 'EXTREMA',
   'hud.aria.mute': 'Silenciar audio',
   'hud.aria.unmute': 'Activar sonido',
   'hud.aria.pause': 'Pausar juego',
@@ -497,6 +505,7 @@ export const ja: TranslationKeys = {
   'difficulty.easy': 'イージー',
   'difficulty.normal': 'ノーマル',
   'difficulty.brutal': 'ブルータル',
+  'difficulty.extreme': 'エクストリーム',
 
   'hud.shield': 'シールド',
   'hud.chronoMatrix': 'クロノマトリックス',
@@ -509,6 +518,7 @@ export const ja: TranslationKeys = {
   'hud.difficulty.easy': 'イージー',
   'hud.difficulty.normal': 'ノーマル',
   'hud.difficulty.hard': 'ハード',
+  'hud.difficulty.extreme': 'エクストリーム',
   'hud.aria.mute': 'ミュート',
   'hud.aria.unmute': 'ミュート解除',
   'hud.aria.pause': '一時停止',
