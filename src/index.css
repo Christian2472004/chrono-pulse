@@ -104,3 +104,40 @@ a:focus:not(:focus-visible) {
     scroll-behavior: auto !important;
   }
 }
+
+/* --- Animated neon game logo (GameLogo component) --- */
+
+@keyframes cpLogoPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+@keyframes cpLogoSweep {
+  to { stroke-dashoffset: -232.5; }
+}
+
+@keyframes cpLogoSpark {
+  0%, 100% { opacity: 0.95; }
+  50% { opacity: 0.2; }
+}
+
+.cp-logo-ring {
+  animation: cpLogoPulse 3.2s ease-in-out infinite;
+}
+
+.cp-logo-run {
+  animation: cpLogoSweep 4.6s linear infinite;
+}
+
+.cp-logo-bolt {
+  animation: cpLogoPulse 3.2s ease-in-out infinite;
+  animation-delay: 1.6s;
+}
+
+.cp-logo-spark {
+  animation: cpLogoSpark 2.6s ease-in-out infinite;
+}
+
+.cp-logo-spark-2 {
+  animation-delay: 1.3s;
+}

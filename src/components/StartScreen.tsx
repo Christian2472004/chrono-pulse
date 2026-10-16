@@ -1,6 +1,7 @@
 import React from 'react';
 import { Play, Trophy, HelpCircle, Volume2, VolumeX, Sparkles, Shield, Zap } from 'lucide-react';
 import { LanguageSelector } from './LanguageSelector';
+import { GameLogo } from './GameLogo';
 import { t, Language } from '../i18n';
 
 interface StartScreenProps {
@@ -25,14 +26,17 @@ export const StartScreen: React.FC<StartScreenProps> = ({
   onLanguageChange,
 }) => {
   return (
-    <div className="absolute inset-0 z-30 flex flex-col items-center justify-center p-4 select-none bg-slate-950/70 backdrop-blur-sm">
+    <div className="absolute inset-0 z-30 flex overflow-y-auto select-none bg-slate-950/70 backdrop-blur-sm">
       {/* Background Animated Accents */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-cyan-600/15 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute bottom-1/4 right-1/4 w-72 h-72 bg-rose-600/15 rounded-full blur-3xl pointer-events-none" />
       </div>
 
-      <div className="relative max-w-md w-full flex flex-col items-center text-center space-y-6">
+      <div className="relative m-auto max-w-md w-full flex flex-col items-center text-center space-y-4 sm:space-y-5 p-4">
+        {/* Animated Neon Logo */}
+        <GameLogo className="w-16 h-16 sm:w-20 sm:h-20 drop-shadow-[0_0_22px_rgba(34,211,238,0.3)]" />
+
         {/* Game Badge */}
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-950/80 border border-cyan-500/40 text-cyan-300 text-xs font-chakra tracking-widest font-bold">
           <Sparkles className="w-3.5 h-3.5 text-cyan-400 animate-spin-slow" />

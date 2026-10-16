@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="public/logo.svg" width="128" height="128" alt="Logo CHRONO-PULSE — anneau néon et éclair" />
+</p>
+
 # CHRONO-PULSE // Neon Rhythm Slasher
 
 Jeu d'action-arcade en navigateur au style synthwave : manipulez le temps, tranchez les drones cyber et renvoyez les lasers vers l'essaim.

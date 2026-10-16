@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" id="cp-logo" role="img" aria-label="CHRONO-PULSE">
+  <defs>
+    <radialGradient id="cpBg" cx="64" cy="48" r="80" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#101a33"/>
+      <stop offset="0.65" stop-color="#0a1021"/>
+      <stop offset="1" stop-color="#04060d"/>
+    </radialGradient>
+    <linearGradient id="cpRing" x1="24" y1="18" x2="104" y2="110" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#22d3ee"/>
+      <stop offset="0.52" stop-color="#818cf8"/>
+      <stop offset="1" stop-color="#ec4899"/>
+    </linearGradient>
+    <linearGradient id="cpBolt" x1="78" y1="30" x2="48" y2="98" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#f0fdff"/>
+      <stop offset="0.5" stop-color="#67e8f9"/>
+      <stop offset="1" stop-color="#a78bfa"/>
+    </linearGradient>
+    <radialGradient id="cpCore" cx="64" cy="64" r="34" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#22d3ee" stop-opacity="0.25"/>
+      <stop offset="0.55" stop-color="#6366f1" stop-opacity="0.10"/>
+      <stop offset="1" stop-color="#6366f1" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="cpGlow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <style>
+    .cp-ring { animation: cpRingPulse 3.2s ease-in-out infinite; }
+    .cp-run  { animation: cpRun 4.6s linear infinite; }
+    .cp-bolt { animation: cpBoltPulse 3.2s ease-in-out infinite; animation-delay: 1.6s; }
+    .cp-spark-a { animation: cpSpark 2.6s ease-in-out infinite; }
+    .cp-spark-b { animation: cpSpark 2.6s ease-in-out infinite; animation-delay: 1.3s; }
+    @keyframes cpRingPulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.7; } }
+    @keyframes cpRun { to { stroke-dashoffset: -232.5; } }
+    @keyframes cpBoltPulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.78; } }
+    @keyframes cpSpark { 0%, 100% { opacity: 0.95; } 50% { opacity: 0.2; } }
+    @media (prefers-reduced-motion: reduce) {
+      .cp-ring, .cp-run, .cp-bolt, .cp-spark-a, .cp-spark-b { animation: none; }
+    }
+  </style>
+
+  <!-- Background plate -->
+  <rect x="4" y="4" width="120" height="120" rx="28" fill="url(#cpBg)"/>
+  <rect x="4.75" y="4.75" width="118.5" height="118.5" rx="27.25" fill="none" stroke="url(#cpRing)" stroke-opacity="0.45" stroke-width="1.5"/>
+
+  <!-- Core glow -->
+  <circle cx="64" cy="64" r="34" fill="url(#cpCore)"/>
+
+  <!-- Clock ticks (12 / 9 / 6 o'clock) -->
+  <g stroke="url(#cpRing)" stroke-width="2.5" stroke-linecap="round" stroke-opacity="0.75">
+    <line x1="64" y1="17.5" x2="64" y2="23"/>
+    <line x1="17.5" y1="64" x2="23" y2="64"/>
+    <line x1="64" y1="105" x2="64" y2="110.5"/>
+  </g>
+
+  <!-- Chrono ring forming a "C" -->
+  <path class="cp-ring" d="M87.8 35.7 A37 37 0 1 0 87.8 92.3" fill="none" stroke="url(#cpRing)" stroke-width="7.5" stroke-linecap="round" filter="url(#cpGlow)"/>
+
+  <!-- Orbiting energy comet -->
+  <path class="cp-run" d="M87.8 35.7 A37 37 0 1 0 87.8 92.3" fill="none" stroke="#e0f2fe" stroke-width="6.5" stroke-linecap="round" stroke-dasharray="26 206.5" stroke-dashoffset="0" opacity="0.9" filter="url(#cpGlow)"/>
+
+  <!-- Slash bolt -->
+  <path class="cp-bolt" d="M70 34 L49 66 L61 66 L54 94 L80 59 L67 59 Z" fill="url(#cpBolt)" filter="url(#cpGlow)" stroke="#e0f2fe" stroke-width="1" stroke-linejoin="round" stroke-opacity="0.5"/>
+
+  <!-- Sparks -->
+  <circle class="cp-spark-a" cx="95" cy="28" r="2.6" fill="#67e8f9"/>
+  <circle class="cp-spark-b" cx="95" cy="100" r="2.2" fill="#f472b6"/>
+</svg>
