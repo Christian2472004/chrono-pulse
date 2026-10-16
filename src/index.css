@@ -72,6 +72,18 @@ canvas {
   -webkit-touch-callout: none;
 }
 
+/* Full-height app shell: dynamic viewport height on mobile so the UI is
+   never hidden behind browser toolbars; 100vh fallback for older browsers */
+.app-viewport {
+  height: 100vh;
+  height: 100dvh;
+}
+
+/* iOS home-indicator safe area for the bottom touch controls */
+.pb-safe {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
 /* --- UI/UX polish layer --- */
 
 /* Clickable elements must show a pointer cursor

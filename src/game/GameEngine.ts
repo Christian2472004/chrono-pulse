@@ -80,6 +80,9 @@ export class GameEngine {
   public mouseX: number = 0;
   public mouseY: number = 0;
   public isPointerDown: boolean = false;
+  // True once a real mouse move happens — prevents aiming at stale (0,0)
+  // coordinates on touch devices that never fire mousemove events
+  public mouseActive: boolean = false;
 
   // Mobile virtual joystick coordinates
   public touchMoveVec: { x: number; y: number } | null = null;
@@ -381,6 +384,19 @@ export class GameEngine {
   }
 
   // Energy Blade Slash
+  /**
+   * Aim at a point (canvas coordinates). Used by mobile tap/drag:
+   * a tap aims instantly AND slashes (slash=true), a drag only re-aims.
+   */
+  public aimAt(x: number, y: number, slash: boolean = false) {
+    if (this.isGameOver || this.isPaused) return;
+    const dx = x - this.player.x;
+    const dy = y - this.player.y;
+    if (Math.hypot(dx, dy) < 6) return; // ignore taps right on the player
+    this.player.angle = Math.atan2(dy, dx);
+    if (slash) this.performSlash();
+  }
+
   public performSlash() {
     if (this.player.slashCooldown > 0 || this.isGameOver || this.isPaused) return;
 
@@ -645,10 +661,14 @@ export class GameEngine {
     if (p.y < pad) { p.y = pad; p.vy = 0; }
     if (p.y > this.height - pad) { p.y = this.height - pad; p.vy = 0; }
 
-    // Aim angle
+    // Aim angle — priority: touch aim (tap/drag) > movement direction > mouse.
+    // On touch devices that never moved a mouse, keep the current facing
+    // instead of snapping to the stale (0,0) mouse coordinates.
     if (this.touchAimVec) {
       p.angle = Math.atan2(this.touchAimVec.y, this.touchAimVec.x);
-    } else {
+    } else if (this.touchMoveVec) {
+      p.angle = Math.atan2(this.touchMoveVec.y, this.touchMoveVec.x);
+    } else if (this.mouseActive) {
       p.angle = Math.atan2(this.mouseY - p.y, this.mouseX - p.x);
     }
   }

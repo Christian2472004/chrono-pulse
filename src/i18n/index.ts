@@ -28,6 +28,7 @@ type TranslationKeys = {
   'start.button.mute': string;
   'start.button.audioOn': string;
   'start.proTip': string;
+  'start.tipMobile': string;
 
   // HUD
   'hud.shield': string;
@@ -145,6 +146,7 @@ export const fr: TranslationKeys = {
   'start.button.mute': 'COUPER LE SON',
   'start.button.audioOn': 'SON ACTIVÉ',
   'start.proTip': 'ASTUCE: Appuyez sur <kbd>ESPACE</kbd> ou <kbd>ENTRÉE</kbd> pour entrer directement au combat !',
+  'start.tipMobile': 'MOBILE : touchez l\'arène pour viser et trancher !',
 
   'hud.shield': 'BOUCLIER',
   'hud.chronoMatrix': 'MATRICE CHRONO',
@@ -254,6 +256,7 @@ export const en: TranslationKeys = {
   'start.button.mute': 'MUTE',
   'start.button.audioOn': 'AUDIO ON',
   'start.proTip': 'PRO-TIP: Press <kbd>SPACE</kbd> or <kbd>ENTER</kbd> to jump straight into combat!',
+  'start.tipMobile': 'MOBILE: tap the arena to aim & slash!',
 
   'hud.shield': 'SHIELD',
   'hud.chronoMatrix': 'CHRONO MATRIX',
@@ -363,6 +366,7 @@ export const es: TranslationKeys = {
   'start.button.mute': 'SILENCIAR',
   'start.button.audioOn': 'SONIDO ACTIVO',
   'start.proTip': 'CONSEJO: Pulsa <kbd>ESPACIO</kbd> o <kbd>ENTRADA</kbd> para saltar directo al combate!',
+  'start.tipMobile': 'MÓVIL: ¡toca la arena para apuntar y cortar!',
 
   'hud.shield': 'ESCUDO',
   'hud.chronoMatrix': 'MATRIZ CHRONO',
@@ -472,6 +476,7 @@ export const ja: TranslationKeys = {
   'start.button.mute': 'ミュート',
   'start.button.audioOn': '音声オン',
   'start.proTip': 'ヒント: <kbd>スペース</kbd> または <kbd>エンター</kbd> で即戦闘開始!',
+  'start.tipMobile': 'モバイル: アリーナをタップで照準＆斬撃!',
 
   'hud.shield': 'シールド',
   'hud.chronoMatrix': 'クロノマトリックス',

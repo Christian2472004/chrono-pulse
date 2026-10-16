@@ -17,7 +17,7 @@ Jeu d'action-arcade en navigateur au style synthwave : manipulez le temps, tranc
 | Action | Clavier / Souris | Mobile |
 |---|---|---|
 | Déplacement | WASD / Flèches | Joystick gauche |
-| Viser | Souris | Joystick droit |
+| Viser | Souris | Tap / glisser sur l'arène |
 | Slash (trancher / parer) | Espace / Clic gauche | Bouton SLASH |
 | Chrono Surge (ralenti) | Shift / C | Bouton CHRONO |
 | Dash cyber (invincibilité) | E / F | Bouton DASH |
@@ -35,7 +35,7 @@ Jeu d'action-arcade en navigateur au style synthwave : manipulez le temps, tranc
 - **Bonus de vie** — 3% de chance de drop un cœur à chaque kill (max 5 PV)
 - **4 langues** — Français, English, Español, 日本語 (sélecteur intégré, préférence sauvegardée)
 - **Classement local** — Top 10 des scores avec statistiques
-- **Support mobile** — Contrôles tactiles virtuels
+- **Support mobile** — Joystick virtuel, visée & slash d'un tap sur l'arène
 - **Audio Web Audio API** — Musique synthwave et effets générés en temps réel
 
 ## 🛠️ Stack technique

@@ -143,6 +143,11 @@ export const StartScreen: React.FC<StartScreenProps> = ({
           </div>
         </div>
 
+        {/* Mobile Quick Hint */}
+        <p className="text-[11px] text-cyan-300/90 font-chakra tracking-wide sm:hidden">
+          {t(language, 'start.tipMobile')}
+        </p>
+
         {/* Desktop Quick Hint */}
         <p className="text-[11px] text-slate-400 font-mono hidden sm:block" dangerouslySetInnerHTML={{ __html: t(language, 'start.proTip') }} />
       </div>

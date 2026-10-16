@@ -46,6 +46,9 @@ export function App() {
 
   // Track whether any modal is open so global shortcuts don't fight modal interactions
   const modalOpenRef = useRef(false);
+  // Set when "start" is tapped before the engine mount effect has run
+  // (possible on slow devices right after page load) — honored once ready
+  const pendingStartRef = useRef(false);
   modalOpenRef.current = showLeaderboard || showHowToPlay;
 
   // Save language preference
@@ -119,6 +122,13 @@ export function App() {
     );
     engineRef.current = engine;
 
+    // If "start" was tapped before the engine existed, honor it now
+    if (pendingStartRef.current) {
+      pendingStartRef.current = false;
+      engine.start();
+      setGameState('PLAYING');
+    }
+
     // Window resize handler
     const handleResize = () => {
       engine.resize();
@@ -166,6 +176,7 @@ export function App() {
         const rect = canvasRef.current.getBoundingClientRect();
         engine.mouseX = e.clientX - rect.left;
         engine.mouseY = e.clientY - rect.top;
+        engine.mouseActive = true;
       }
     };
 
@@ -179,6 +190,57 @@ export function App() {
     const handleMouseUp = () => {
       engine.isPointerDown = false;
     };
+
+    // Arena touch (mobile): tap = aim + slash instantly, drag = keep aiming.
+    // Joystick and action buttons are separate elements above the canvas, so
+    // touches that begin on them never reach these handlers.
+    const canvasEl = canvasRef.current;
+    let aimTouchId: number | null = null;
+
+    const arenaTouchStart = (e: TouchEvent) => {
+      if (!engine.isRunning || engine.isPaused || engine.isGameOver) return;
+      const rect = canvasEl.getBoundingClientRect();
+      const t = e.changedTouches[0];
+      const x = t.clientX - rect.left;
+      const y = t.clientY - rect.top;
+      engine.aimAt(x, y, true);
+      const dx = x - engine.player.x;
+      const dy = y - engine.player.y;
+      if (Math.hypot(dx, dy) > 6) {
+        engine.touchAimVec = { x: dx, y: dy };
+        aimTouchId = t.identifier;
+      }
+    };
+
+    const arenaTouchMove = (e: TouchEvent) => {
+      if (aimTouchId === null || !engine.isRunning || engine.isPaused || engine.isGameOver) return;
+      const rect = canvasEl.getBoundingClientRect();
+      for (const t of Array.from(e.changedTouches)) {
+        if (t.identifier !== aimTouchId) continue;
+        const x = t.clientX - rect.left;
+        const y = t.clientY - rect.top;
+        engine.aimAt(x, y, false);
+        const dx = x - engine.player.x;
+        const dy = y - engine.player.y;
+        if (Math.hypot(dx, dy) > 6) engine.touchAimVec = { x: dx, y: dy };
+      }
+    };
+
+    const arenaTouchEnd = (e: TouchEvent) => {
+      if (aimTouchId === null) return;
+      for (const t of Array.from(e.changedTouches)) {
+        if (t.identifier === aimTouchId) {
+          aimTouchId = null;
+          engine.touchAimVec = null;
+          break;
+        }
+      }
+    };
+
+    canvasEl.addEventListener('touchstart', arenaTouchStart);
+    canvasEl.addEventListener('touchmove', arenaTouchMove);
+    canvasEl.addEventListener('touchend', arenaTouchEnd);
+    canvasEl.addEventListener('touchcancel', arenaTouchEnd);
 
     window.addEventListener('keydown', handleKeyDown);
     window.addEventListener('keyup', handleKeyUp);
@@ -200,6 +262,10 @@ export function App() {
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('mousedown', handleMouseDown);
       window.removeEventListener('mouseup', handleMouseUp);
+      canvasEl.removeEventListener('touchstart', arenaTouchStart);
+      canvasEl.removeEventListener('touchmove', arenaTouchMove);
+      canvasEl.removeEventListener('touchend', arenaTouchEnd);
+      canvasEl.removeEventListener('touchcancel', arenaTouchEnd);
       clearInterval(hudInterval);
       engine.destroy();
     };
@@ -210,6 +276,11 @@ export function App() {
     if (engineRef.current) {
       engineRef.current.start();
       setGameState('PLAYING');
+    } else {
+      // Engine not created yet (mount effect still pending): start
+      // automatically as soon as it exists — fixes taps that did
+      // nothing on slow first loads.
+      pendingStartRef.current = true;
     }
   };
 
@@ -268,7 +339,7 @@ export function App() {
   }, [saveLanguage]);
 
   return (
-    <div className="relative w-screen h-screen overflow-hidden bg-slate-950 select-none crt-overlay">
+    <div className="relative w-screen app-viewport overflow-hidden bg-slate-950 select-none crt-overlay">
       {/* Canvas Layer */}
       <canvas
         ref={canvasRef}
