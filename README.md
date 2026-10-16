@@ -32,7 +32,7 @@ Jeu d'action-arcade en navigateur au style synthwave : manipulez le temps, tranc
 - **Difficulté adaptative** — Le directeur de difficulté analyse vos performances (PV perdus, précision, réflexes) et ajuste le jeu en 0.5×–2.5×
 - **Système de combo & rangs** — Multiplicateur de score, critiques tous les 5 combos, 6 rangs (D → S+)
 - **5 types d'ennemis** — Drone, Sniper, Splitter, Orb Weaver, Titan
-- **Bonus de vie** — 3% de chance de drop un cœur à chaque kill (max 5 PV)
+- **Bonus de vie** — 8% de chance de drop un cœur à chaque kill (max 5 PV)
 - **4 langues** — Français, English, Español, 日本語 (sélecteur intégré, préférence sauvegardée)
 - **Classement local** — Top 10 des scores avec statistiques
 - **Support mobile** — Joystick virtuel, visée & slash d'un tap sur l'arène

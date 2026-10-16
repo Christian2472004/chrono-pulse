@@ -72,7 +72,7 @@ export class GameEngine {
   private dangerActive: boolean = false;
 
   // Base config (tunable)
-  private readonly BASE_ENERGY_REGEN = 8;
+  private readonly BASE_ENERGY_REGEN = 10;
   private readonly BASE_CHRONO_COST = 28;
 
   // Input states
@@ -164,10 +164,11 @@ export class GameEngine {
     };
 
     this.spawnTimer = 0;
-    this.nextSpawnInterval = 1.2;
+    this.nextSpawnInterval = 1.8;
 
-    // Difficulty Director init
-    this.difficultyLevel = 1.0;
+    // Difficulty Director init — start slightly below "normal" so the
+    // adaptive system protects casual players from the very first seconds
+    this.difficultyLevel = 0.85;
     this.perfSamples = [];
     this.lastHp = 5; // Match player.maxHealth (now 5)
     this.slashCount = 0;
@@ -213,7 +214,7 @@ export class GameEngine {
   }
 
   private evaluateDifficulty() {
-    if (this.perfSamples.length < 2) return;
+    if (this.perfSamples.length < 1) return;
 
     const recent = this.perfSamples.slice(-3); // Last ~90s
     const avgHpLost = recent.reduce((sum, s) => sum + s.hpLost, 0) / recent.length;
@@ -229,8 +230,9 @@ export class GameEngine {
     let adjustment = 0;
 
     // HP pressure (most important)
-    if (avgHpLost > targetHpLost * 1.5) adjustment -= 0.15; // Struggling -> easier
-    else if (avgHpLost < targetHpLost * 0.5) adjustment += 0.1; // Breezing -> harder
+    if (avgHpLost > 1.5) adjustment -= 0.25; // Getting shredded -> much easier
+    else if (avgHpLost > targetHpLost * 2) adjustment -= 0.12; // Struggling -> easier
+    else if (avgHpLost < targetHpLost * 0.5) adjustment += 0.08; // Breezing -> harder
 
     // Accuracy
     if (avgAccuracy > targetAccuracy * 1.3) adjustment += 0.08;
@@ -245,8 +247,8 @@ export class GameEngine {
     else if (avgKills < 3) adjustment -= 0.05;
 
     // Apply with smoothing - clamp adjustment per evaluation
-    adjustment = Math.max(-0.2, Math.min(0.2, adjustment));
-    this.difficultyLevel = Math.max(0.5, Math.min(2.5, this.difficultyLevel + adjustment * 0.3));
+    adjustment = Math.max(-0.25, Math.min(0.25, adjustment));
+    this.difficultyLevel = Math.max(0.5, Math.min(2.5, this.difficultyLevel + adjustment * 0.5));
   }
 
   private getDifficultyMultiplier(stat: 'spawn' | 'speed' | 'health' | 'projectile' | 'energyRegen' | 'chronoCost'): number {
@@ -532,7 +534,7 @@ export class GameEngine {
     const playerDt = this.chronoSurgeActive ? dt * 0.75 : dt;
 
     this.timeSurvived += dt;
-    this.wave = 1 + Math.floor(this.timeSurvived / 18);
+    this.wave = 1 + Math.floor(this.timeSurvived / 25);
 
     // Difficulty Director: record performance sample every 30s
     if (Math.floor(this.timeSurvived / this.perfWindow) !== Math.floor((this.timeSurvived - dt) / this.perfWindow)) {
@@ -583,7 +585,7 @@ export class GameEngine {
       this.spawnTimer = 0;
       this.spawnWaveGroup();
       // Increase spawn rate as game progresses
-      this.nextSpawnInterval = Math.max(0.6, 2.0 - (this.wave * 0.15));
+      this.nextSpawnInterval = Math.max(0.9, 2.6 - (this.wave * 0.12));
     }
 
     // Update Enemies
@@ -783,7 +785,7 @@ export class GameEngine {
       case 'MINI_DRONE':
         radius = 10;
         health = Math.max(1, Math.round(1 * healthMult));
-        speed = 220 * speedMult;
+        speed = 195 * speedMult;
         color = '#f97316'; // Orange
         glowColor = '#fb923c';
         points = 80;
@@ -856,7 +858,7 @@ export class GameEngine {
           e.vy += Math.sin(e.angle) * e.speed * dt * 4;
         }
         e.attackTimer += dt;
-        if (e.attackTimer >= 2.2) {
+        if (e.attackTimer >= 2.5) {
           e.attackTimer = 0;
           this.fireProjectile(e.x, e.y, e.angle, 380, '#c084fc');
           if (dist < 350) this.signalDanger();
@@ -1020,8 +1022,8 @@ export class GameEngine {
     }
 
     // Drop battery/shield with chance
-    if (Math.random() < 0.28) {
-      const type = Math.random() < 0.15 ? 'SHIELD' : 'ENERGY';
+    if (Math.random() < 0.32) {
+      const type = Math.random() < 0.22 ? 'SHIELD' : 'ENERGY';
       this.pickups.push({
         id: this.nextId++,
         x: e.x,
@@ -1035,9 +1037,9 @@ export class GameEngine {
     // Small chrono energy refund on every kill
     this.player.chronoEnergy = Math.min(this.player.maxEnergy, this.player.chronoEnergy + 8);
 
-    // Tiny health bonus on kill (very rare, very small)
-    // 3% chance to restore 1 HP, only if not at max health
-    if (this.player.health < this.player.maxHealth && Math.random() < 0.03) {
+    // Health bonus on kill (small, but generous enough for casual runs)
+    // 8% chance to restore 1 HP, only if not at max health
+    if (this.player.health < this.player.maxHealth && Math.random() < 0.08) {
       this.player.health += 1;
       this.addFloatingText('+1 VIE', e.x, e.y - 28, '#10b981', 1.0);
       this.createShockwave(e.x, e.y, '#10b981', 20);
@@ -1047,7 +1049,7 @@ export class GameEngine {
 
   private hurtPlayer(damage: number) {
     this.player.health -= damage;
-    this.player.invulnerableTimer = 1.0; // 1s i-frames
+    this.player.invulnerableTimer = 1.2; // 1.2s i-frames
     this.combo = 0; // Combo drop
     this.triggerScreenShake(14, 0.35);
     audio.playHurt();
