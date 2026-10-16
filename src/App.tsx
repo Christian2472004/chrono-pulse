@@ -239,10 +239,12 @@ export function App() {
   };
 
   const goToMainMenu = () => {
+    // Stop the current run (loop + music) but KEEP the engine instance:
+    // it is created once in the mount effect, and start() fully resets it
+    // for the next game. Setting engineRef.current = null used to break
+    // "LANCER LE PROTOCOLE" (startGame silently did nothing afterwards).
     if (engineRef.current) {
-      engineRef.current.pause();
       engineRef.current.destroy();
-      engineRef.current = null; // <-- important : réinitialise la référence
     }
     setGameState('START');
     setLastRecord(null);
