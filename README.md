@@ -6,7 +6,7 @@ Jeu d'action-arcade en navigateur au style synthwave : manipulez le temps, tranc
 
 ## 🎮 Jouer
 
-**➡️ [Jouer en ligne](https://chrono-pulse.vercel.app)** *(lien à jour après le déploiement Vercel)*
+**➡️ [Jouer en ligne](https://chrono-pulse-nine.vercel.app)**
 
 ## 🕹️ Commandes
 
